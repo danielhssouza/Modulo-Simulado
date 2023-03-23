@@ -11,13 +11,17 @@ const option: swaggerJSDoc.Options = {
       version
     }
   },
-  apis: ['./src/routes/routes.ts', './src/schemas/*.ts']
+  apis: ['./src/routes/*.ts', './src/schemas/*.ts'],
 }
+
+const options = {
+  explorer: true,
+};
 
 const swaggerSpec = swaggerJSDoc(option)
 
 function swaggerDocs (app: Express, port: number): void {
-  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, options))
 
   app.get('docs.json', (req: Request, res: Response) => {
     res.setHeader('Content-Type', 'application/json')
