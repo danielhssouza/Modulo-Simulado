@@ -6,7 +6,7 @@ class QuestaoController {
   public async post (req: Request, res: Response): Promise<Response> {
     try {
       const questoe = await QuestaoService.Add(req.body as IQuestaoDTO)
-      return res.json(questoe)
+      return res.status(200).json(questoe)
     } catch (err: any) {
       return res.status(400).json(err.message)
     }
