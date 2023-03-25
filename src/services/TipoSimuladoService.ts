@@ -1,9 +1,10 @@
+import { ITipoSimuladoDTO } from '../DTOs/SimuladoDTO'
 import { type ITipoSimulado } from '../Models/Simulado'
 import TipoSimulado from '../schemas/TipoSimulado'
-import type IServiceBase from './Contracts/IServiceBase'
+import { IServiceBase } from './Contracts/IServiceBase'
 
-class TipoSimuladoService implements IServiceBase<ITipoSimulado> {
-  public async Add (tipoSimulado: ITipoSimulado): Promise<ITipoSimulado> {
+class TipoSimuladoService implements IServiceBase<ITipoSimulado, ITipoSimuladoDTO> {
+  public async Add (tipoSimulado: ITipoSimuladoDTO): Promise<ITipoSimulado> {
     const tipoS = await TipoSimulado.create({
       nome: tipoSimulado.nome,
       quantidadeTotalQuestao: tipoSimulado.quantidadeTotalQuestao,
@@ -13,11 +14,11 @@ class TipoSimuladoService implements IServiceBase<ITipoSimulado> {
     return tipoS
   }
 
-  public async getAll (): Promise<ITipoSimulado[]> {
+  public async GetAll (): Promise<ITipoSimulado[]> {
     return await TipoSimulado.find()
   }
 
-  public async getById (id: string): Promise<ITipoSimulado | null> {
+  public async GetById (id: string): Promise<ITipoSimulado | null> {
     return await TipoSimulado
       .findById(id)
       .populate({
@@ -32,6 +33,15 @@ class TipoSimuladoService implements IServiceBase<ITipoSimulado> {
           path: 'frente', model: 'Frente'
         }
       })
+  }
+
+  public async Delete (id: string): Promise<boolean> {
+    try {
+      await TipoSimulado.deleteOne({ _id: id })
+      return true
+    } catch (error) {
+      return false
+    }
   }
 }
 
