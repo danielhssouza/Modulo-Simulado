@@ -19,7 +19,7 @@ const simuladoSchema = new Schema<ISimulado>({
     required: false,
     ref: TipoSimulado
   },
-  questao: [{
+  questoes: [{
     type: Schema.Types.ObjectId,
     required: false,
     ref: Questao

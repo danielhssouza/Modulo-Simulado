@@ -20,7 +20,7 @@ export interface ISimulado extends Document {
   nome: string
   descricao: string
   tipo: ITipoSimulado
-  questao: IQuestao[]
+  questoes: IQuestao[]
   aproveitamento: number
   vezesRespondido: number
   bloqueado: boolean

@@ -76,7 +76,8 @@ const questaoSchema = new Schema<IQuestao>({
   alternativaCorreta: {
     type: String,
     enum: Alternativa,
-    required: true
+    required: true,
+    select: false
   },
   imagemLink: {
     type: String,
@@ -85,12 +86,14 @@ const questaoSchema = new Schema<IQuestao>({
   acertos: {
     type: Number,
     required: false,
-    default: 0
+    default: 0,
+    select: false
   },
   quantidadeTeste: {
     type: Number,
     required: false,
-    default: 0
+    default: 0,
+    select: false
   },
   dificuldade: {
     type: Number,

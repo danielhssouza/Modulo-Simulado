@@ -1,6 +1,6 @@
 import { IQuestaoDTO } from "../DTOs/QuestaoDTO";
 import { IQuestao } from "../Models/Questao";
-import { IRegra, ITipoSimulado } from "../Models/Simulado";
+import { IRegra } from "../Models/Simulado";
 import Questao from "../schemas/Questao";
 import TipoSimulado from "../schemas/TipoSimulado";
 import { IServiceBase } from "./Contracts/IServiceBase";
@@ -34,9 +34,17 @@ class QuestaoService implements IServiceBase<IQuestao, IQuestaoDTO> {
     if(tipo){
       await Promise.all(tipo.regras.map(async (regra) => {
         const q = await this.GetQuestionByRule(regra)
-        console.log(q.length)
         questoes = questoes.concat(q)
       }))
+    } else {
+      throw Error(`Erro ao Buscar Tipo de Simulado. Verifique que o mesmo existe`)
+    }
+
+    if(questoes.length == 0 || tipo!.quantidadeTotalQuestao > questoes.length) {
+      throw Error(
+        `Não foi possível buscar o numero de questoes determinadas. ` +
+        `Questoes Selecionada: ${questoes.length} - ` +
+        `Questoes Totais Requeridas: ${tipo.quantidadeTotalQuestao}`)
     }
     return questoes
   }
@@ -49,6 +57,7 @@ class QuestaoService implements IServiceBase<IQuestao, IQuestaoDTO> {
     if(regra.caderno) regras['ano'] = regra.caderno
     return await Questao
       .find(regras)
+      .select('_id')
       .sort({ 'quantidadeTeste': 1})
       .limit(regra.quantidade as number)
   }
