@@ -1,11 +1,11 @@
 import mongoose from '../database/config'
-import { Alternativa, Caderno, EnemArea, type Questao } from '../Models/Questao'
+import { Alternativa, Caderno, EnemArea, type IQuestao } from '../Models/Questao'
 import Exame from './Exame'
 import Frente from './Frente'
 import Materia from './Materia'
 const { Schema, model } = mongoose
 
-const questaoSchema = new Schema<Questao>({
+const questaoSchema = new Schema<IQuestao>({
   exame: {
     type: Schema.Types.ObjectId,
     require: true,
@@ -81,6 +81,21 @@ const questaoSchema = new Schema<Questao>({
   imagemLink: {
     type: String,
     required: true
+  },
+  acertos: {
+    type: Number,
+    required: false,
+    default: 0
+  },
+  quantidadeTeste: {
+    type: Number,
+    required: false,
+    default: 0
+  },
+  dificuldade: {
+    type: Number,
+    required: false,
+    default: 0
   }
 }, {
   timestamps: true,

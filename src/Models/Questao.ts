@@ -21,6 +21,9 @@ export interface IQuestao extends Document {
   textoAlternativaE: string
   alternativaCorreta: string
   imagemLink: string
+  acertos: number
+  quantidadeTeste: number
+  dificuldade: number
 }
 
 export const EnemArea = [
