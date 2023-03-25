@@ -36,12 +36,8 @@ class TipoSimuladoService implements IServiceBase<ITipoSimulado, ITipoSimuladoDT
   }
 
   public async Delete (id: string): Promise<boolean> {
-    try {
-      await TipoSimulado.deleteOne({ _id: id })
-      return true
-    } catch (error) {
-      return false
-    }
+    const remove = await TipoSimulado.deleteOne({ _id: id })
+    return remove.deletedCount > 0
   }
 }
 
